@@ -49,13 +49,14 @@ del merged['CR']
 
 
 columns_to_scale = ["HP"]
-scaler = MinMaxScaler(feature_range=(0, 30))
+scaler = MinMaxScaler()
 scaler.fit(merged[columns_to_scale])
 merged[columns_to_scale] = scaler.transform(merged[columns_to_scale])
 
+
 row = merged.iloc[-1:]
 #with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-#    print(row)
+print(row["HP"])
 
 lasso = joblib.load("model.sav")
 print(lasso.predict(row))
