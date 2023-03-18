@@ -47,16 +47,25 @@ del merged['Wisdom']
 del merged['Constitution']
 del merged['CR']
 
-
 columns_to_scale = ["HP"]
 scaler = MinMaxScaler()
 scaler.fit(merged[columns_to_scale])
 merged[columns_to_scale] = scaler.transform(merged[columns_to_scale])
 
-
 row = merged.iloc[-1:]
-#with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-print(row["HP"])
 
 lasso = joblib.load("model.sav")
-print(lasso.predict(row))
+value = lasso.predict(row)
+
+if value < 0:
+    value = 0
+elif 0 < value < 1 / 8:
+    value = 1 / 8
+elif 1 / 8 < value < 1 / 4:
+    value = 1 / 4
+elif 1 / 4 < value < 1 / 2:
+    value = 1 / 2
+else:
+    value = round(value)
+
+print("The estimated CR for the monster is: ", value)
