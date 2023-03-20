@@ -1,4 +1,5 @@
 import pandas as pd
+from numpy import ceil
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import linear_model
 import joblib
@@ -66,6 +67,6 @@ elif 1 / 8 < value < 1 / 4:
 elif 1 / 4 < value < 1 / 2:
     value = 1 / 2
 else:
-    value = round(value)
+    value = ceil(value)
 
 print("The estimated CR for the monster is: ", value)
